@@ -135,6 +135,50 @@ Files with the `.auto.tfvars` extension are similar to tfvars files but with one
 
     Use local variables to manage derived values efficiently and keep your configurations maintainable.
 
+    ## Terraform Output Parameters
+
+    Output parameters in Terraform are used to display and expose information about your infrastructure after applying your configuration. They help in retrieving values from your managed resources, which can be used for further automation or simply to provide useful information.
+
+    ### Key Points
+
+    - Declared using the output block.
+    - Exposes resource attributes and computed values.
+    - Can mark outputs as sensitive to hide sensitive data.
+    - Useful for integration with other systems or modules.
+
+    ### Syntax
+
+    ```hcl
+    output "name" {
+        description = "Description of the output."
+        value       = <EXPRESSION>
+        sensitive   = false   # Optional: set to true to hide the value.
+    }
+    ```
+
+    ### Example: Output AWS Instance ID
+
+    Below is an example that creates an EC2 instance and outputs its ID using an output parameter.
+
+    ```hcl
+    resource "aws_instance" "example" {
+        ami           = "ami-12345678"
+        instance_type = var.instance_type
+        # Additional configuration...
+    }
+
+    output "instance_id" {
+        description = "The ID of the created EC2 instance."
+        value       = aws_instance.example.id
+    }
+    ```
+
+    After running `terraform apply`, Terraform displays the output value for `instance_id`, which can be useful for subsequent operations or debugging.
+
+    ### Conclusion
+
+    Terraform output parameters streamline the process of capturing and passing essential information from your configurations, improving both modularity and reusability of your code.
+
     # Terraform Variable Types
 
     Terraform supports a variety of variable types which improve configuration validation and clarity. These types enforce constraints on variable values, ensuring that your inputs meet expected formats.

@@ -104,6 +104,37 @@ Files with the `.auto.tfvars` extension are similar to tfvars files but with one
     ```
     Terraform automatically loads this file, so no extra CLI flag is required.
 
+    ## Terraform Local Variables
+
+    Local variables in Terraform are used to define temporary values that can simplify your configuration. They allow you to calculate values once and reuse them throughout your module without exposing them as input variables.
+
+    ### Key Points
+
+    - **Definition**: Declared using the `locals` block, they are internal to the configuration.
+    - **Purpose**: Simplify complex expressions, avoid repetition, and improve readability.
+    - **Scope**: Limited to the module in which they are defined.
+    - **Evaluation**: Computed during plan time and can depend on input variables or other local values.
+
+    ### Example
+
+    ```hcl
+    locals {
+        instance_type   = "t2.micro"
+        region          = "us-west-2"
+        instance_config = {
+            type   = local.instance_type
+            region = local.region
+        }
+    }
+
+    resource "aws_instance" "example" {
+        instance_type = local.instance_config.type
+        # Other resource configurations...
+    }
+    ```
+
+    Use local variables to manage derived values efficiently and keep your configurations maintainable.
+
     # Terraform Variable Types
 
     Terraform supports a variety of variable types which improve configuration validation and clarity. These types enforce constraints on variable values, ensuring that your inputs meet expected formats.

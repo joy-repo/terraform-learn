@@ -24,6 +24,39 @@ resource "aws_instance" "example" {
 }
 ```
 
+# Ways to Set Variables in Terraform
+
+Terraform allows you to supply variable values in several ways:
+
+## 1. Default Values
+Define defaults directly within the configuration using the variable block. If no value is provided elsewhere, Terraform uses these defaults.
+
+## 2. tfvars Files
+Create a file (e.g., dev.tfvars) containing variable assignments:
+```hcl
+instance_type = "t2.medium"
+region        = "us-west-2"
+```
+Then reference the file explicitly:
+```bash
+terraform plan -var-file="dev.tfvars"
+```
+
+## 3. .auto.tfvars Files
+Files ending with `.auto.tfvars` are automatically loaded by Terraform, eliminating the need for an explicit reference.
+
+## 4. Environment Variables
+Set variables as environment variables with the prefix TF_VAR_. For example:
+```bash
+export TF_VAR_instance_type="t2.micro"
+```
+
+## 5. Command-Line Flags
+Pass variable values directly during execution:
+```bash
+terraform apply -var="instance_type=t2.small"
+```
+
 ## tfvars and .auto.tfvars Files in Terraform
 
 ### What are tfvars Files?

@@ -103,3 +103,104 @@ Files with the `.auto.tfvars` extension are similar to tfvars files but with one
     environment   = "production"
     ```
     Terraform automatically loads this file, so no extra CLI flag is required.
+
+    # Terraform Variable Types
+
+    Terraform supports a variety of variable types which improve configuration validation and clarity. These types enforce constraints on variable values, ensuring that your inputs meet expected formats.
+
+    ## Primitive Types
+
+    ### string
+    Represents a sequence of characters.
+    ```hcl
+    variable "example_string" {
+        type    = string
+        default = "Hello, Terraform"
+    }
+    ```
+
+    ### number
+    Represents numeric values.
+    ```hcl
+    variable "example_number" {
+        type    = number
+        default = 42
+    }
+    ```
+
+    ### bool
+    Represents boolean values (true or false).
+    ```hcl
+    variable "example_bool" {
+        type    = bool
+        default = true
+    }
+    ```
+
+    ## Complex Types
+
+    ### list
+    An ordered sequence of values.
+    ```hcl
+    variable "example_list" {
+        type    = list(string)
+        default = ["one", "two", "three"]
+    }
+    ```
+
+    ### map
+    A collection of key-value pairs.
+    ```hcl
+    variable "example_map" {
+        type    = map(string)
+        default = {
+            key1 = "value1",
+            key2 = "value2"
+        }
+    }
+    ```
+
+    ### set
+    An unordered collection of unique values.
+    ```hcl
+    variable "example_set" {
+        type    = set(string)
+        default = ["apple", "banana", "cherry"]
+    }
+    ```
+
+    ### object
+    A collection of named attributes with their own types.
+    ```hcl
+    variable "example_object" {
+        type = object({
+            name = string,
+            age  = number
+        })
+        default = {
+            name = "Alice",
+            age  = 30
+        }
+    }
+    ```
+
+    ### tuple
+    A fixed-length sequence defined by specific types.
+    ```hcl
+    variable "example_tuple" {
+        type    = tuple([string, number, bool])
+        default = ["status", 200, true]
+    }
+    ```
+
+    ## Any Type
+
+    The "any" type allows any value and disables type checking.
+    ```hcl
+    variable "example_any" {
+        type    = any
+        default = "Any value is allowed"
+    }
+    ```
+
+    Terraform's flexible type system helps enforce the correctness of variable values, leading to more reliable and maintainable configurations.

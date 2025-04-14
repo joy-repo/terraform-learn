@@ -41,7 +41,7 @@ terraform.tfstate.d/<workspace_name>/terraform.tfstate
 
 ```
 
-* AWS backend:
+* AWS Remote backend:
 
 can use : ${terraform.workspace}
 
@@ -63,3 +63,50 @@ terraform apply     # deploys infrastructure to dev
 terraform workspace new prod
 terraform apply     # deploys infrastructure to prod
 ```
+
+## Terraform Remote State
+
+### Example using S3:
+
+```hcl
+## ⚙️ Example: Using S3 as a Remote Backend
+
+terraform {
+  backend "s3" {
+    bucket         = "my-terraform-state-bucket"
+    key            = "envs/prod/terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    dynamodb_table = "terraform-locks"   # for state locking (optional but recommended)
+  }
+}
+```
+
+###  Sharing Remote State Between Modules
+
+Sometimes, one module or project needs to reference outputs from another module's state.
+
+You can use **terraform_remote_state** data source:
+
+```hcl
+
+data "terraform_remote_state" "network" {
+  backend = "s3"
+  config = {
+    bucket = "my-terraform-state-bucket"
+    key    = "envs/prod/network/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
+output "vpc_id" {
+  value = data.terraform_remote_state.network.outputs.vpc_id
+}
+```
+
+Terraform remote state ensures your infrastructure state is:
+* Safe
+* Shared
+* Recoverable
+* Secure
+

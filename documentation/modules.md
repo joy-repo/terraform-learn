@@ -1,3 +1,7 @@
+
+
+# Refer : https://github.com/sidpalas/devops-directive-terraform-course/tree/main/06-organization-and-modules
+
 # 📦 Terraform Modules - In-Depth Guide
 
 Terraform **modules** are the **foundation of reusable infrastructure as code**. They allow you to **group and encapsulate resources** in a logical unit, promoting **modularity**, **reusability**, and **clean project structure**.
@@ -23,6 +27,7 @@ A **module** in Terraform is a container for multiple resources that are used to
    - Remote modules (e.g., from GitHub, Terraform Registry, etc.)
 
 ---
+
 
 ## 📌 Basic Module Structure
 

@@ -138,7 +138,7 @@ aws dynamodb create-table \
 
 In your Terraform configuration (**main.tf** or a dedicated **backend.tf**):
 
-```tf
+```hcl
 terraform {
   backend "s3" {
     bucket         = "my-terraform-state-bucket"
